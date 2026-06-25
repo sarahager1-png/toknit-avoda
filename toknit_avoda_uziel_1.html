@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תוכנית עבודה בית ספרית — בית חינוך חב"ד עוזיאל</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Heebo', sans-serif; direction: rtl; background: #EBEDF2; color: #1a1a1a; line-height: 1.5; padding: 1.5rem 1rem 4rem; }
+.vm { max-width: 860px; margin: 0 auto; }
+.vm-head { background: #fff; border: 1px solid #E3E6F0; border-radius: 14px; padding: 1.75rem 2rem; margin-bottom: 1.25rem; border-right: 5px solid #1B2A6B; }
+.vm-head-top { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
+.vm-logo { width: 52px; height: 52px; border-radius: 10px; background: #1B2A6B; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.vm-logo span { color: #C8A84B; font-size: 24px; font-weight: 700; }
+.vm-head-text { flex: 1; }
+.vm-head h1 { font-size: 26px; font-weight: 700; color: #1B2A6B; line-height: 1.2; }
+.vm-head .sub { font-size: 14px; color: #888; margin-top: 4px; letter-spacing: 0.3px; }
+.vm-meta { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid #EEF0F5; padding-top: 14px; margin-top: 4px; }
+.vm-meta .chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 20px 4px 0; font-size: 13.5px; color: #444; border-left: 1px solid #E3E6F0; margin-left: 20px; }
+.vm-meta .chip:last-child { border-left: none; margin-left: 0; }
+.vm-meta .chip i { color: #1B2A6B; font-size: 15px; }
+.budget-banner { display: flex; gap: 0; background: #F4F6FB; border: 1px solid #E3E6F0; border-radius: 10px; overflow: hidden; margin-top: 16px; }
+.budget-banner .bb-cell { flex: 1; padding: 12px 14px; background: transparent; text-align: center; border-left: 1px solid #E3E6F0; }
+.budget-banner .bb-label { font-size: 11px; color: #888; margin-bottom: 3px; }
+.budget-banner .bb-val { font-size: 18px; font-weight: 700; color: #1B2A6B; }
+.budget-banner .bb-val.gold { color: #C8A84B; }
+.budget-banner .bb-val.over { color: #FF8A8A; }
+.vm-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.vm-progress-text { font-size: 14px; color: #555; }
+.vm-progress-text b { color: #1B2A6B; font-weight: 700; }
+.toolbar-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.vm-btn { font-family: 'Heebo', sans-serif; font-size: 13px; border-radius: 8px; padding: 9px 16px; cursor: pointer; border: 1px solid #C3CBE8; background: #fff; color: #555; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; }
+.vm-btn:hover { border-color: #1B2A6B; color: #1B2A6B; background: #EEF1FB; }
+.vm-btn.gold { background: #C8A84B; border-color: #C8A84B; color: #fff; }
+.vm-btn.gold:hover { background: #B8943A; }
+.goal-card { background: #fff; border: 1px solid #E3E6F0; border-radius: 14px; margin-bottom: 1rem; overflow: hidden; }
+.goal-card.open { border-color: #C3CBE8; }
+.goal-bar { display: flex; align-items: center; gap: 12px; padding: 1.1rem 1.25rem; user-select: none; }
+.goal-num { width: 36px; height: 36px; border-radius: 9px; background: #1B2A6B; color: #C8A84B; font-weight: 700; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; }
+.goal-titles { flex: 1; min-width: 0; }
+.goal-title { font-size: 17px; font-weight: 700; color: #1B2A6B; line-height: 1.35; outline: none; }
+.goal-title:focus { background: #FFFDF7; box-shadow: 0 0 0 2px #C8A84B; border-radius: 3px; }
+.goal-cat { font-size: 12.5px; color: #999; margin-top: 2px; outline: none; }
+.goal-cat:focus { background: #FFFDF7; box-shadow: 0 0 0 2px #C8A84B; border-radius: 3px; }
+.goal-budget-mini { font-size: 11.5px; color: #0F6E56; background: #E1F5EE; border-radius: 8px; padding: 4px 10px; white-space: nowrap; flex-shrink: 0; }
+.goal-budget-mini.over { color: #A32D2D; background: #FCEBEB; }
+.goal-status-dot { width: 11px; height: 11px; border-radius: 50%; background: #ccc; flex-shrink: 0; }
+.goal-status-dot.green { background: #1D9E75; }
+.goal-status-dot.amber { background: #EF9F27; }
+.goal-status-dot.red { background: #E24B4A; }
+.goal-chev { color: #aaa; font-size: 22px; transition: transform 0.2s; flex-shrink: 0; cursor: pointer; }
+.goal-card.open .goal-chev { transform: rotate(180deg); }
+.goal-body { display: none; padding: 0 1.25rem 1.25rem; }
+.goal-card.open .goal-body { display: block; }
+.task { border: 1px solid #E3E6F0; border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+.task-head { background: #F7F8FB; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
+.task-head .tnum { font-size: 11px; font-weight: 700; color: #1B2A6B; background: #EEF1FB; border-radius: 6px; padding: 2px 8px; flex-shrink: 0; }
+.task-head .tname { flex: 1; font-size: 13.5px; font-weight: 500; color: #1a1a1a; outline: none; min-width: 0; }
+.task-head .tname:focus { background: #FFFDF7; box-shadow: 0 0 0 2px #C8A84B; border-radius: 3px; }
+.task-del { background: none; border: none; color: #c5c5c5; cursor: pointer; font-size: 17px; padding: 2px; display: flex; }
+.task-del:hover { color: #E24B4A; }
+.task-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+.task-cell { padding: 8px 12px; border-top: 1px solid #EEF0F5; border-left: 1px solid #EEF0F5; }
+.task-cell:nth-child(3n) { border-left: none; }
+.task-cell .clabel { font-size: 10.5px; color: #999; margin-bottom: 3px; display: flex; align-items: center; gap: 4px; }
+.task-cell .cval { font-size: 12.5px; color: #444; line-height: 1.45; outline: none; min-height: 18px; }
+.task-cell .cval:focus { background: #FFFDF7; box-shadow: 0 0 0 2px #C8A84B; border-radius: 3px; }
+.task-cell.budget .cval { color: #0F6E56; }
+.cost-row { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #EEF0F5; background: #FAFBFD; }
+.cost-cell { padding: 8px 12px; border-left: 1px solid #EEF0F5; }
+.cost-cell:last-child { border-left: none; }
+.cost-cell .clabel { font-size: 10.5px; color: #999; margin-bottom: 3px; display: flex; align-items: center; gap: 4px; }
+.cost-input-wrap { display: flex; align-items: center; gap: 3px; }
+.cost-input-wrap .shekel { font-size: 13px; color: #888; }
+.cost-input { font-family: 'Heebo', sans-serif; font-size: 13.5px; font-weight: 500; border: none; background: transparent; outline: none; width: 100%; color: #1a1a1a; padding: 2px; border-radius: 3px; }
+.cost-input:focus { background: #FFFDF7; box-shadow: 0 0 0 2px #C8A84B; }
+.cost-cell.planned .cost-input { color: #1B2A6B; }
+.cost-cell.actual .cost-input { color: #0F6E56; }
+.task-summary { padding: 9px 12px; border-top: 1px solid #EEF0F5; background: #FBF8EF; }
+.task-summary .clabel { font-size: 10.5px; color: #8A6D1A; margin-bottom: 3px; display: flex; align-items: center; gap: 4px; font-weight: 500; }
+.task-summary .sval { font-size: 12.5px; color: #1a1a1a; line-height: 1.5; outline: none; min-height: 20px; }
+.task-summary .sval:empty:before { content: attr(data-ph); color: #B0A270; }
+.task-summary .sval:focus { background: #fff; box-shadow: 0 0 0 2px #C8A84B; border-radius: 3px; }
+.add-task-btn { width: 100%; font-family: 'Heebo', sans-serif; font-size: 12.5px; color: #1B2A6B; background: #EEF1FB; border: 1px dashed #9DAAD4; border-radius: 8px; padding: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 1rem; transition: all 0.15s; }
+.add-task-btn:hover { background: #E2E8F8; }
+.goal-cost-summary { display: flex; gap: 10px; background: #F4F6FB; border-radius: 10px; padding: 12px 14px; margin-bottom: 1rem; }
+.gcs-cell { flex: 1; text-align: center; }
+.gcs-label { font-size: 11px; color: #888; margin-bottom: 3px; }
+.gcs-val { font-size: 15px; font-weight: 700; color: #1B2A6B; }
+.gcs-val.actual { color: #0F6E56; }
+.gcs-val.over { color: #A32D2D; }
+.gcs-divider { width: 1px; background: #DDE2EE; }
+.status-row { display: flex; align-items: center; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
+.status-label { font-size: 13px; color: #555; }
+.status-btns { display: flex; gap: 6px; }
+.status-opt { font-family: 'Heebo', sans-serif; font-size: 12px; padding: 6px 13px; border-radius: 16px; border: 1px solid #ccc; background: #fff; color: #666; cursor: pointer; transition: all 0.15s; }
+.status-opt:hover { border-color: #888; }
+.status-opt.active-green { background: #E1F5EE; border-color: #1D9E75; color: #0F6E56; font-weight: 500; }
+.status-opt.active-amber { background: #FAEEDA; border-color: #EF9F27; color: #854F0B; font-weight: 500; }
+.status-opt.active-red { background: #FCEBEB; border-color: #E24B4A; color: #A32D2D; font-weight: 500; }
+.goal-summary-label { font-size: 13px; font-weight: 500; color: #8A6D1A; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.goal-summary-box { background: #FBF8EF; border: 1px solid #E8DBB0; border-radius: 10px; padding: 12px 14px; min-height: 60px; font-size: 13px; line-height: 1.6; color: #1a1a1a; outline: none; }
+.goal-summary-box:empty:before { content: attr(data-ph); color: #B0A270; }
+.goal-summary-box:focus { box-shadow: 0 0 0 2px #C8A84B; }
+.goal-del-row { text-align: left; margin-top: 10px; }
+.goal-del-btn { font-family: 'Heebo', sans-serif; background: none; border: none; color: #c5c5c5; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+.goal-del-btn:hover { color: #E24B4A; }
+.add-goal-btn { width: 100%; font-family: 'Heebo', sans-serif; font-size: 14px; color: #1B2A6B; background: #fff; border: 1.5px dashed #9DAAD4; border-radius: 12px; padding: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 1rem; transition: all 0.15s; font-weight: 500; }
+.add-goal-btn:hover { background: #EEF1FB; border-color: #1B2A6B; }
+.vm-foot { background: #fff; border: 1px solid #E3E6F0; border-radius: 14px; padding: 1.5rem 1.75rem; margin-top: 1.5rem; }
+.vm-foot h3 { font-size: 15px; font-weight: 700; color: #1B2A6B; margin-bottom: 4px; display: flex; align-items: center; gap: 7px; }
+.vm-foot h3 i { color: #C8A84B; }
+.vm-foot .sub2 { font-size: 13px; color: #777; }
+.vm-foot .goal-summary-box { margin-top: 10px; min-height: 90px; }
+.foot-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.25rem; }
+.foot-field { flex: 1; min-width: 150px; }
+.foot-field label { font-size: 12.5px; color: #555; display: block; margin-bottom: 5px; }
+.foot-field input { width: 100%; font-family: 'Heebo', sans-serif; font-size: 14px; border: none; border-bottom: 1px solid #C3CBE8; padding: 5px 2px; background: transparent; outline: none; }
+.foot-field input:focus { border-bottom-color: #C8A84B; }
+.save-note { text-align: center; font-size: 12px; color: #999; margin-top: 1.5rem; }
+.save-note i { color: #C8A84B; }
+@media print {
+  body { background: #fff; padding: 0; font-size: 11px; }
+  .vm-toolbar, .save-note, .add-goal-btn, .add-task-btn, .task-del, .goal-del-row { display: none !important; }
+  .dev-credit { display: block !important; }
+  .goal-body { display: block !important; }
+  .goal-card { break-inside: avoid; border-color: #ccc; }
+  .goal-chev { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="vm">
+<div class="vm-head">
+  <div class="vm-head-top">
+    <div class="vm-logo"><span>ע</span></div>
+    <div class="vm-head-text">
+      <h1>תוכנית עבודה בית ספרית</h1>
+      <div class="sub">שנת תשפ"ז</div>
+    </div>
+  </div>
+  <div class="vm-meta">
+    <span class="chip"><i class="ti ti-building"></i> בית חינוך חב"ד "עוזיאל"</span>
+    <span class="chip"><i class="ti ti-map-pin"></i> באר שבע</span>
+    <span class="chip"><i class="ti ti-user"></i> מנהלת: רבקה רוט</span>
+    <span class="chip"><i class="ti ti-network"></i> רשת אהלי יוסף יצחק</span>
+  </div>
+  <div class="budget-banner">
+    <div class="bb-cell"><div class="bb-label">סה"כ מתוכנן</div><div class="bb-val gold" id="totalPlanned">₪0</div></div>
+    <div class="bb-cell"><div class="bb-label">סה"כ בפועל</div><div class="bb-val" id="totalActual">₪0</div></div>
+    <div class="bb-cell"><div class="bb-label">יתרה</div><div class="bb-val" id="totalDiff">₪0</div></div>
+  </div>
+</div>
+
+<div class="vm-toolbar">
+  <div class="vm-progress-text">סטטוס יעדים: <b id="progCount">0</b> מתוך <b id="goalTotal">5</b> דורגו</div>
+  <div class="toolbar-btns">
+    <button class="vm-btn" onclick="expandAll()"><i class="ti ti-arrows-maximize"></i> פתח הכל</button>
+    <button class="vm-btn" onclick="window.print()"><i class="ti ti-printer"></i> הדפסה</button>
+    <button class="vm-btn gold" onclick="saveData()"><i class="ti ti-device-floppy"></i> שמירה</button>
+  </div>
+</div>
+
+<div id="goalsContainer"></div>
+
+<button class="add-goal-btn" onclick="addGoal()"><i class="ti ti-plus"></i> הוספת יעד חדש</button>
+
+<div class="vm-foot">
+  <h3><i class="ti ti-clipboard-check"></i> סיכום כללי והחלטות</h3>
+  <div class="sub2">מקום להחלטות מרכזיות, דגשים לשנה הבאה והמלצות</div>
+  <div class="goal-summary-box" contenteditable="true" data-ph="לחצו כאן לכתיבת סיכום כללי..." id="globalSummary"></div>
+  <div class="foot-meta">
+    <div class="foot-field"><label>משתתפים</label><input type="text" id="members"></div>
+    <div class="foot-field"><label>תאריך הישיבה</label><input type="text" id="meetingDate" placeholder="__ / __ / ____"></div>
+  </div>
+</div>
+
+<div class="save-note"><i class="ti ti-info-circle"></i> הנתונים נשמרים אוטומטית בדפדפן זה. לחצו "הדפסה" לייצוא PDF לחלוקה.</div>
+<div class="dev-credit" style="text-align:center; margin-top:1.5rem; font-size:11px; color:#bbb; font-family:'Heebo',sans-serif;">פיתוח ובינוי: שרה הגר | 050-333-9770</div>
+</div>
+
+<script>
+const seedGoals = [
+  { title:'חיזוק ופיתוח ההון האנושי', cat:'שלומות (Well-Being) ומצוינות צוותי הוראה וניהול',
+    tasks:[
+      {name:'סדנאות גיבוש', owner:'מנהלת, יועצת', budget:'גפן — גמיש', metric:'השתתפות 85% מהצוות ומשוב חיובי', planned:0, actual:0, summary:''},
+      {name:'יציאות משותפות', owner:'מנהלת, יועצת', budget:'גפן — גמיש', metric:'השתתפות 85% מהצוות ומשוב חיובי', planned:0, actual:0, summary:''},
+      {name:'"ראש חודש שלי" — כיבוד/שי קטן עם פתקון', owner:'מנהלת, רכזת חברתית', budget:'גפן — גמיש', metric:'עקביות וגיוון לאורך כל השנה', planned:0, actual:0, summary:''},
+      {name:'שאלון אח"מ', owner:'', budget:'', metric:'', planned:0, actual:0, summary:''},
+    ]},
+  { title:'קידום האוריינות השפתית', cat:'למידה רלוונטית — ידע, מיומנויות וערכים',
+    tasks:[
+      {name:'הדרכת מרום', owner:'מנהלת, רכזת פדגוגית מרום', budget:'גפן — גמיש', metric:'שימוש בתוכניות לימודים לפי לו"ז סדור; עלייה בדיווח מיפויים; עבודה דיפרנציאלית מבוססת נתונים', planned:0, actual:0, summary:''},
+      {name:'הדרכת שפה — רשת חב"ד', owner:'מנהלת, מדריכה/רכזת שפה', budget:'גפן — גמיש', metric:'שימוש בתוכניות לימודים לפי לו"ז סדור; עלייה בדיווח מיפויים', planned:0, actual:0, summary:''},
+      {name:'שעות תגבור פרטניות וקבוצתיות', owner:'רכזת שפה, מחנכות, רכזת שילוב', budget:'רווחה חינוכית', metric:'צמצום תלמידות אדומות ב-80%; עלייה בהישגים ב-30%', planned:0, actual:0, summary:''},
+    ]},
+  { title:'הרחבת הלמידה החדשנית והדיגיטלית', cat:'למידה אישית, דיגיטלית וקידום אקדמיזציה',
+    tasks:[
+      {name:'רכישת תוכניות מותאמות לעבודה מתוקשבת', owner:'מנהלת, רכזת תקשוב', budget:'גפן — גמיש', metric:'שימוש מורות ותלמידות בתוכניות', planned:0, actual:0, summary:''},
+      {name:'שימוש באמצעים דיגיטליים בשיעורים', owner:'רכזת פדגוגית, רכזת תקשוב', budget:'גפן — גמיש', metric:'', planned:0, actual:0, summary:''},
+      {name:'למידה דיפרנציאלית', owner:'רכזת פדגוגית מרום, רכזת פדגוגית', budget:'שעות בודדות', metric:'צמצום תלמידות אדומות ב-80%; עלייה בהישגים ב-30%', planned:0, actual:0, summary:''},
+    ]},
+  { title:'חיזוק הלכידות החברתית', cat:'חינוך לשייכות, זהות ואחריות חברתית',
+    tasks:[
+      {name:'תוכניות/פעילויות מתאימות', owner:'מנהלת, רכזת חברתית', budget:'גפן — גמיש; קרן קרב; שינוי', metric:'', planned:0, actual:0, summary:''},
+      {name:'שעות גיבוש/סדנאות למועצת תלמידות ולבעלות אחריות', owner:'מנהלת, רכזת חברתית', budget:'גפן — גמיש; רווחה חינוכית', metric:'שאלון אקלים', planned:0, actual:0, summary:''},
+    ]},
+  { title:'יצירת קהילת הורים לומדת', cat:'שותפות הורים וקהילה',
+    tasks:[
+      {name:'הדרכות הורים לשכבות א׳-ב׳ ו-ו׳-ח׳', owner:'מנהלת, רכזת חברתית', budget:'גפן — גמיש; תשלומי הורים', metric:'השתתפות 20% מהורי ביה"ס בהדרכות', planned:0, actual:0, summary:''},
+      {name:'4 מפגשי חינוך להורי ביה"ס', owner:'מנהלת, סגנית', budget:'גפן — גמיש', metric:'השתתפות 40% מהורי ביה"ס במפגשים', planned:0, actual:0, summary:''},
+      {name:'3 התוועדויות לאימהות ביה"ס', owner:'מנהלת, סגנית, רכזת חברתית', budget:'גפן — גמיש', metric:'השתתפות 50% מאימהות ביה"ס בהתוועדויות', planned:0, actual:0, summary:''},
+    ]},
+];
+
+let goals = [];
+let statusState = {};
+
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fmt(n){ return '₪' + (n||0).toLocaleString('he-IL'); }
+function num(v){ const n=parseFloat(String(v).replace(/[^\d.-]/g,'')); return isNaN(n)?0:n; }
+
+function taskHTML(gi, ti, t) {
+  return '<div class="task" data-gi="'+gi+'" data-ti="'+ti+'">'+
+    '<div class="task-head">'+
+      '<span class="tnum">'+(ti+1)+'</span>'+
+      '<div class="tname" contenteditable="true">'+esc(t.name)+'</div>'+
+      '<button class="task-del" onclick="delTask('+gi+','+ti+')" title="מחיקת משימה"><i class="ti ti-trash"></i></button>'+
+    '</div>'+
+    '<div class="task-grid">'+
+      '<div class="task-cell owner"><div class="clabel"><i class="ti ti-user-check"></i> גורם אחראי</div><div class="cval" contenteditable="true">'+esc(t.owner)+'</div></div>'+
+      '<div class="task-cell budget"><div class="clabel"><i class="ti ti-wallet"></i> מקור תקציב</div><div class="cval" contenteditable="true">'+esc(t.budget)+'</div></div>'+
+      '<div class="task-cell metric"><div class="clabel"><i class="ti ti-target"></i> מדדי הצלחה</div><div class="cval" contenteditable="true">'+esc(t.metric)+'</div></div>'+
+    '</div>'+
+    '<div class="cost-row">'+
+      '<div class="cost-cell planned"><div class="clabel"><i class="ti ti-calculator"></i> עלות מתוכננת</div><div class="cost-input-wrap"><span class="shekel">₪</span><input type="text" class="cost-input planned-input" value="'+(t.planned||'')+'" oninput="onCostChange()" inputmode="numeric"></div></div>'+
+      '<div class="cost-cell actual"><div class="clabel"><i class="ti ti-receipt"></i> הוצאה בפועל</div><div class="cost-input-wrap"><span class="shekel">₪</span><input type="text" class="cost-input actual-input" value="'+(t.actual||'')+'" oninput="onCostChange()" inputmode="numeric"></div></div>'+
+    '</div>'+
+    '<div class="task-summary"><div class="clabel"><i class="ti ti-message-dots"></i> סיכום הוועדה למשימה</div><div class="sval" contenteditable="true" data-ph="הערות, התרשמות והחלטות למשימה זו...">'+esc(t.summary)+'</div></div>'+
+  '</div>';
+}
+
+function goalHTML(gi, g) {
+  const tasks = g.tasks.map((t,ti)=>taskHTML(gi,ti,t)).join('');
+  return '<div class="goal-card" id="gc'+gi+'">'+
+    '<div class="goal-bar">'+
+      '<div class="goal-num" onclick="toggleGoal('+gi+')">'+(gi+1)+'</div>'+
+      '<div class="goal-titles">'+
+        '<div class="goal-title" contenteditable="true">'+esc(g.title)+'</div>'+
+        '<div class="goal-cat" contenteditable="true">'+esc(g.cat)+'</div>'+
+      '</div>'+
+      '<div class="goal-budget-mini" id="gmini'+gi+'"></div>'+
+      '<div class="goal-status-dot" id="dot'+gi+'"></div>'+
+      '<i class="ti ti-chevron-down goal-chev" onclick="toggleGoal('+gi+')"></i>'+
+    '</div>'+
+    '<div class="goal-body">'+
+      '<div class="tasks-wrap" id="tasks'+gi+'">'+tasks+'</div>'+
+      '<button class="add-task-btn" onclick="addTask('+gi+')"><i class="ti ti-plus"></i> הוספת משימה ליעד זה</button>'+
+      '<div class="goal-cost-summary">'+
+        '<div class="gcs-cell"><div class="gcs-label">מתוכנן ליעד</div><div class="gcs-val" id="gplan'+gi+'">₪0</div></div>'+
+        '<div class="gcs-divider"></div>'+
+        '<div class="gcs-cell"><div class="gcs-label">בפועל ליעד</div><div class="gcs-val actual" id="gact'+gi+'">₪0</div></div>'+
+        '<div class="gcs-divider"></div>'+
+        '<div class="gcs-cell"><div class="gcs-label">יתרה</div><div class="gcs-val" id="gdiff'+gi+'">₪0</div></div>'+
+      '</div>'+
+      '<div class="status-row">'+
+        '<span class="status-label">סטטוס:</span>'+
+        '<div class="status-btns">'+
+          '<button class="status-opt" onclick="setStatus('+gi+',\'green\',this)">מתקדם יפה</button>'+
+          '<button class="status-opt" onclick="setStatus('+gi+',\'amber\',this)">בתהליך</button>'+
+          '<button class="status-opt" onclick="setStatus('+gi+',\'red\',this)">דורש תשומת לב</button>'+
+        '</div>'+
+      '</div>'+
+      
+      '<div class="goal-del-row"><button class="goal-del-btn" onclick="delGoal('+gi+')"><i class="ti ti-trash"></i> מחיקת יעד</button></div>'+
+    '</div>'+
+  '</div>';
+}
+
+function render() {
+  document.getElementById('goalsContainer').innerHTML = goals.map((g,gi)=>goalHTML(gi,g)).join('');
+  document.getElementById('goalTotal').textContent = goals.length;
+  Object.keys(statusState).forEach(gi=>{
+    if(gi<goals.length){
+      const dot=document.getElementById('dot'+gi);
+      if(dot){ dot.className='goal-status-dot '+statusState[gi];
+        const card=document.getElementById('gc'+gi); const btns=card.querySelectorAll('.status-opt'); const map={green:0,amber:1,red:2};
+        if(btns[map[statusState[gi]]]) btns[map[statusState[gi]]].className='status-opt active-'+statusState[gi];
+      }
+    }
+  });
+  document.getElementById('progCount').textContent=Object.keys(statusState).filter(i=>i<goals.length).length;
+  recalc();
+}
+
+function onCostChange(){ recalc(); saveData(true); }
+
+function recalc(){
+  let totalP=0, totalA=0;
+  document.querySelectorAll('.goal-card').forEach((card,gi)=>{
+    let gp=0, ga=0;
+    card.querySelectorAll('.task').forEach(tEl=>{
+      gp += num(tEl.querySelector('.planned-input').value);
+      ga += num(tEl.querySelector('.actual-input').value);
+    });
+    totalP+=gp; totalA+=ga;
+    const gplan=document.getElementById('gplan'+gi); if(gplan) gplan.textContent=fmt(gp);
+    const gact=document.getElementById('gact'+gi); if(gact) gact.textContent=fmt(ga);
+    const gd=gp-ga;
+    const gdiff=document.getElementById('gdiff'+gi);
+    if(gdiff){ gdiff.textContent=fmt(gd); gdiff.className='gcs-val'+(gd<0?' over':''); }
+    const mini=document.getElementById('gmini'+gi);
+    if(mini){
+      if(gp>0||ga>0){ mini.style.display=''; mini.textContent=fmt(ga)+' / '+fmt(gp); mini.className='goal-budget-mini'+(ga>gp&&gp>0?' over':''); }
+      else { mini.style.display='none'; }
+    }
+  });
+  document.getElementById('totalPlanned').textContent=fmt(totalP);
+  document.getElementById('totalActual').textContent=fmt(totalA);
+  const diff=totalP-totalA;
+  const dEl=document.getElementById('totalDiff');
+  dEl.textContent=fmt(diff);
+  dEl.className='bb-val'+(diff<0?' over':'');
+}
+
+function collectDOM() {
+  document.querySelectorAll('.goal-card').forEach((card,gi)=>{
+    if(!goals[gi]) return;
+    goals[gi].title=card.querySelector('.goal-title').innerText;
+    goals[gi].cat=card.querySelector('.goal-cat').innerText;
+    const gsum=document.getElementById('gsum'+gi); if(gsum) goals[gi].summary=gsum.innerText;
+    card.querySelectorAll('.task').forEach((tEl,ti)=>{
+      if(!goals[gi].tasks[ti]) return;
+      goals[gi].tasks[ti].name=tEl.querySelector('.tname').innerText;
+      goals[gi].tasks[ti].owner=tEl.querySelector('.owner .cval').innerText;
+      goals[gi].tasks[ti].budget=tEl.querySelector('.budget .cval').innerText;
+      goals[gi].tasks[ti].metric=tEl.querySelector('.metric .cval').innerText;
+      goals[gi].tasks[ti].planned=num(tEl.querySelector('.planned-input').value);
+      goals[gi].tasks[ti].actual=num(tEl.querySelector('.actual-input').value);
+      goals[gi].tasks[ti].summary=tEl.querySelector('.task-summary .sval').innerText;
+    });
+  });
+}
+
+function toggleGoal(gi){ document.getElementById('gc'+gi).classList.toggle('open'); }
+function expandAll(){
+  const allOpen = goals.every((g,i)=>document.getElementById('gc'+i).classList.contains('open'));
+  goals.forEach((g,i)=>{ const el=document.getElementById('gc'+i); if(allOpen) el.classList.remove('open'); else el.classList.add('open'); });
+}
+function setStatus(gi,color,btn){
+  statusState[gi]=color;
+  btn.parentElement.querySelectorAll('.status-opt').forEach(b=>b.className='status-opt');
+  btn.className='status-opt active-'+color;
+  document.getElementById('dot'+gi).className='goal-status-dot '+color;
+  document.getElementById('progCount').textContent=Object.keys(statusState).filter(i=>i<goals.length).length;
+  saveData(true);
+}
+function addTask(gi){
+  collectDOM();
+  goals[gi].tasks.push({name:'משימה חדשה', owner:'', budget:'', metric:'', planned:0, actual:0, summary:''});
+  const wasOpen=document.getElementById('gc'+gi).classList.contains('open');
+  render(); if(wasOpen) document.getElementById('gc'+gi).classList.add('open');
+  saveData(true);
+}
+function delTask(gi,ti){
+  collectDOM();
+  goals[gi].tasks.splice(ti,1);
+  const wasOpen=document.getElementById('gc'+gi).classList.contains('open');
+  render(); if(wasOpen) document.getElementById('gc'+gi).classList.add('open');
+  saveData(true);
+}
+function addGoal(){
+  collectDOM();
+  goals.push({title:'יעד חדש', cat:'תיאור היעד', summary:'', tasks:[{name:'משימה חדשה', owner:'', budget:'', metric:'', planned:0, actual:0, summary:''}]});
+  render();
+  const gi=goals.length-1; document.getElementById('gc'+gi).classList.add('open');
+  document.getElementById('gc'+gi).scrollIntoView({behavior:'smooth', block:'center'});
+  saveData(true);
+}
+function delGoal(gi){
+  if(!confirm('למחוק את היעד "'+goals[gi].title+'"?')) return;
+  collectDOM();
+  goals.splice(gi,1);
+  const newStatus={}; Object.keys(statusState).forEach(k=>{ k=parseInt(k); if(k<gi) newStatus[k]=statusState[k]; else if(k>gi) newStatus[k-1]=statusState[k]; });
+  statusState=newStatus;
+  render(); saveData(true);
+}
+
+function saveData(silent){
+  collectDOM();
+  const data={ goals, status:statusState, global:document.getElementById('globalSummary').innerText, members:document.getElementById('members').value, meetingDate:document.getElementById('meetingDate').value };
+  try { localStorage.setItem('toknit_avoda_v1', JSON.stringify(data)); } catch(e){}
+  if(!silent && window.event){ const b=window.event.target.closest('.vm-btn'); if(b){ const o=b.innerHTML; b.innerHTML='<i class="ti ti-check"></i> נשמר'; setTimeout(()=>b.innerHTML=o,1500);} }
+}
+
+function loadData(){
+  let raw; try { raw=localStorage.getItem('toknit_avoda_v1'); } catch(e){}
+  if(raw){
+    try { const data=JSON.parse(raw); goals=data.goals; statusState=data.status||{};
+      render();
+      if(data.global) document.getElementById('globalSummary').innerText=data.global;
+      if(data.members) document.getElementById('members').value=data.members;
+      if(data.meetingDate) document.getElementById('meetingDate').value=data.meetingDate;
+      return;
+    } catch(e){}
+  }
+  goals=JSON.parse(JSON.stringify(seedGoals));
+  render();
+}
+
+loadData();
+document.addEventListener('input', (e)=>{ if(!e.target.classList.contains('cost-input')) saveData(true); });
+</script>
+</body>
+</html>
