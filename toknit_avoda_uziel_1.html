@@ -155,15 +155,29 @@ body { font-family: 'Heebo', sans-serif; direction: rtl; background: #EBEDF2; co
 .basket-split { display: flex; gap: 14px; padding: 7px 14px; background: #F7F8FB; border-bottom: 1px solid #EEF0F5; font-size: 11.5px; color: #777; }
 .basket-split b { color: #1B2A6B; font-weight: 700; }
 .basket-progs { padding: 4px 14px 8px; }
-.prog { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px dashed #EEF0F5; }
+.prog { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px dashed #EEF0F5; }
 .prog:last-child { border-bottom: none; }
-.prog span { font-size: 12.5px; color: #333; line-height: 1.4; }
+.prog .pn { flex: 1; font-size: 12.5px; color: #333; line-height: 1.4; }
 .prog b { font-size: 12.5px; font-weight: 700; color: #0F6E56; white-space: nowrap; }
-@media (max-width: 640px) { .baskets { grid-template-columns: 1fr; } }
+/* goal badges + legend */
+.gb { width: 19px; height: 19px; border-radius: 6px; color: #fff; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gb1 { background: #1B2A6B; } .gb2 { background: #1A8CB5; } .gb3 { background: #E0852D; } .gb4 { background: #7A4F9E; }
+.goal-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0 4px; }
+.gl-card { display: flex; align-items: center; gap: 11px; border: 1px solid #E3E6F0; border-radius: 11px; padding: 11px 13px; background: #fff; border-right: 4px solid var(--c); }
+.gl-badge { width: 30px; height: 30px; border-radius: 8px; background: var(--c); color: #fff; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gl-text { flex: 1; min-width: 0; }
+.gl-name { font-size: 13px; font-weight: 700; color: #1a1a1a; line-height: 1.3; }
+.gl-sum { font-size: 12px; color: #0F6E56; font-weight: 700; margin-top: 2px; }
+.gl-sub { font-size: 11px; color: #999; }
+.bs-section-label { font-size: 12px; font-weight: 700; color: #8A6D1A; margin: 18px 0 8px; display: flex; align-items: center; gap: 6px; }
+.vm-brand { text-align: center; padding-bottom: 16px; margin-bottom: 18px; border-bottom: 1px solid #EEF0F5; }
+.vm-brand img { height: 62px; width: auto; max-width: 100%; }
+@media (max-width: 640px) { .baskets, .goal-legend { grid-template-columns: 1fr; } .vm-brand img { height: 50px; } }
 </head>
 <body>
 <div class="vm">
 <div class="vm-head">
+  <div class="vm-brand"><img src="logo-chabad.png" alt="רשת חינוך חב״ד — אהלי יוסף יצחק ליובאוויטש"></div>
   <div class="vm-head-top">
     <div class="vm-logo"><span>ע</span></div>
     <div class="vm-head-text">
@@ -189,7 +203,7 @@ body { font-family: 'Heebo', sans-serif; direction: rtl; background: #EBEDF2; co
   <div class="bs-head" onclick="document.getElementById('budgetSection').classList.toggle('collapsed')">
     <h2><i class="ti ti-coins"></i> תקציב מוסד · תשפ"ז</h2>
     <div style="display:flex;align-items:center;gap:12px;">
-      <span class="bs-sub">מקור: גפן · פירוט לפי סלים</span>
+      <span class="bs-sub">מקור: גפן · לפי יעד וסל</span>
       <i class="ti ti-chevron-down bs-chev"></i>
     </div>
   </div>
@@ -198,17 +212,27 @@ body { font-family: 'Heebo', sans-serif; direction: rtl; background: #EBEDF2; co
     <div class="bs-tot"><span>תקציב קבוע</span><b>₪136,778</b></div>
     <div class="bs-tot"><span>תקציב גמיש</span><b class="gold">₪457,238</b></div>
   </div>
+
+  <div class="bs-section-label"><i class="ti ti-target-arrow"></i> תקציב לפי יעד</div>
+  <div class="goal-legend">
+    <div class="gl-card" style="--c:#1B2A6B"><div class="gl-badge">1</div><div class="gl-text"><div class="gl-name">חיזוק ופיתוח ההון האנושי</div><div class="gl-sum">₪170,000</div></div></div>
+    <div class="gl-card" style="--c:#1A8CB5"><div class="gl-badge">2</div><div class="gl-text"><div class="gl-name">למידה רלוונטית — ידע, מיומנויות וערכים</div><div class="gl-sum">₪237,352</div></div></div>
+    <div class="gl-card" style="--c:#E0852D"><div class="gl-badge">3</div><div class="gl-text"><div class="gl-name">חיזוק הלכידות החברתית</div><div class="gl-sum">₪129,500</div></div></div>
+    <div class="gl-card" style="--c:#7A4F9E"><div class="gl-badge">4</div><div class="gl-text"><div class="gl-name">יצירת קהילת הורים לומדת</div><div class="gl-sum">₪57,000</div></div></div>
+  </div>
+
+  <div class="bs-section-label"><i class="ti ti-wallet"></i> פירוט לפי סל תקציבי · עם שיוך ליעד</div>
   <div class="baskets">
 
     <div class="basket">
       <div class="basket-head"><span class="bn">סל מנהיגות חינוכית</span><span class="bsum">₪170,000</span></div>
       <div class="basket-split"><span>קבוע <b>₪0</b></span><span>גמיש <b>₪170,000</b></span></div>
       <div class="basket-progs">
-        <div class="prog"><span>מדריך בית ספרי (שאינו מצוות בי"ס)</span><b>₪110,000</b></div>
-        <div class="prog"><span>ימי גיבוש</span><b>₪28,000</b></div>
-        <div class="prog"><span>פיתוח מקצועי · השתלמויות</span><b>₪12,000</b></div>
-        <div class="prog"><span>פיתוח מצוינות</span><b>₪10,000</b></div>
-        <div class="prog"><span>יום הערכות א'</span><b>₪10,000</b></div>
+        <div class="prog"><span class="gb gb1">1</span><span class="pn">מדריך בית ספרי (שאינו מצוות בי"ס)</span><b>₪110,000</b></div>
+        <div class="prog"><span class="gb gb1">1</span><span class="pn">ימי גיבוש</span><b>₪28,000</b></div>
+        <div class="prog"><span class="gb gb1">1</span><span class="pn">פיתוח מקצועי · השתלמויות</span><b>₪12,000</b></div>
+        <div class="prog"><span class="gb gb1">1</span><span class="pn">פיתוח מצוינות</span><b>₪10,000</b></div>
+        <div class="prog"><span class="gb gb1">1</span><span class="pn">יום הערכות א'</span><b>₪10,000</b></div>
       </div>
     </div>
 
@@ -216,16 +240,16 @@ body { font-family: 'Heebo', sans-serif; direction: rtl; background: #EBEDF2; co
       <div class="basket-head"><span class="bn">סל תשתיות בית ספריות</span><span class="bsum">₪127,217</span></div>
       <div class="basket-split"><span>קבוע <b>₪12,837</b></span><span>גמיש <b>₪114,217</b></span></div>
       <div class="basket-progs">
-        <div class="prog"><span>צילום ושכפול חומר לימודי</span><b>₪28,000</b></div>
-        <div class="prog"><span>תשתית וספק אינטרנט</span><b>₪21,029</b></div>
-        <div class="prog"><span>עיצוב חללים</span><b>₪20,000</b></div>
-        <div class="prog"><span>תחזוקת מחשבים (באמצעות הרשות)</span><b>₪16,000</b></div>
-        <div class="prog"><span>הדפסה</span><b>₪15,000</b></div>
-        <div class="prog"><span>ציוד משרדי מתכלה</span><b>₪13,000</b></div>
-        <div class="prog"><span>הצטיידות מעבדה</span><b>₪5,000</b></div>
-        <div class="prog"><span>מייקרוסופט</span><b>₪4,725</b></div>
-        <div class="prog"><span>תיק-תק · ניהול פדגוגי</span><b>₪2,300</b></div>
-        <div class="prog"><span>הצטיידות תקשוב</span><b>₪2,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">צילום ושכפול חומר לימודי</span><b>₪28,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">תשתית וספק אינטרנט</span><b>₪21,029</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">עיצוב חללים</span><b>₪20,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">תחזוקת מחשבים (באמצעות הרשות)</span><b>₪16,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">הדפסה</span><b>₪15,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">ציוד משרדי מתכלה</span><b>₪13,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">הצטיידות מעבדה</span><b>₪5,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">מייקרוסופט</span><b>₪4,725</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">תיק-תק · ניהול פדגוגי</span><b>₪2,300</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">הצטיידות תקשוב</span><b>₪2,000</b></div>
       </div>
     </div>
 
@@ -233,9 +257,9 @@ body { font-family: 'Heebo', sans-serif; direction: rtl; background: #EBEDF2; co
       <div class="basket-head"><span class="bn">סל מענים חברתיים</span><span class="bsum">₪86,500</span></div>
       <div class="basket-split"><span>קבוע <b>₪30,571</b></span><span>גמיש <b>₪55,929</b></span></div>
       <div class="basket-progs">
-        <div class="prog"><span>הרצאות (זה"ב, לקראת חגים, בנושאי חינוך)</span><b>₪50,000</b></div>
-        <div class="prog"><span>תוכנית קרב (בתיאום עם הרשות)</span><b>₪26,500</b></div>
-        <div class="prog"><span>יוזמות רשות / בעלות</span><b>₪10,000</b></div>
+        <div class="prog"><span class="gb gb3">3</span><span class="pn">הרצאות (זה"ב, לקראת חגים, בנושאי חינוך)</span><b>₪50,000</b></div>
+        <div class="prog"><span class="gb gb3">3</span><span class="pn">תוכנית קרב (בתיאום עם הרשות)</span><b>₪26,500</b></div>
+        <div class="prog"><span class="gb gb3">3</span><span class="pn">יוזמות רשות / בעלות</span><b>₪10,000</b></div>
       </div>
     </div>
 
@@ -243,10 +267,10 @@ body { font-family: 'Heebo', sans-serif; direction: rtl; background: #EBEDF2; co
       <div class="basket-head"><span class="bn">סל אוכלוסיות במיקוד</span><span class="bsum">₪81,000</span></div>
       <div class="basket-split"><span>קבוע <b>₪0</b></span><span>גמיש <b>₪81,000</b></span></div>
       <div class="basket-progs">
-        <div class="prog"><span>מפגשי אמהות</span><b>₪25,000</b></div>
-        <div class="prog"><span>חטיבת חב"ד · מענה לכיתות ז'</span><b>₪24,000</b></div>
-        <div class="prog"><span>מלגות הורים</span><b>₪22,000</b></div>
-        <div class="prog"><span>מוכנות לכיתה א'</span><b>₪10,000</b></div>
+        <div class="prog"><span class="gb gb4">4</span><span class="pn">מפגשי אמהות</span><b>₪25,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">חטיבת חב"ד · מענה לכיתות ז'</span><b>₪24,000</b></div>
+        <div class="prog"><span class="gb gb4">4</span><span class="pn">מלגות הורים</span><b>₪22,000</b></div>
+        <div class="prog"><span class="gb gb4">4</span><span class="pn">מוכנות לכיתה א'</span><b>₪10,000</b></div>
       </div>
     </div>
 
@@ -254,10 +278,10 @@ body { font-family: 'Heebo', sans-serif; direction: rtl; background: #EBEDF2; co
       <div class="basket-head"><span class="bn">סל קידום רווחת התלמיד</span><span class="bsum">₪65,000</span></div>
       <div class="basket-split"><span>קבוע <b>₪48,913</b></span><span>גמיש <b>₪16,087</b></span></div>
       <div class="basket-progs">
-        <div class="prog"><span>סדנאות אקלים חברתי</span><b>₪25,000</b></div>
-        <div class="prog"><span>קלאס-אי טק</span><b>₪22,000</b></div>
-        <div class="prog"><span>טיפול במוזיקה</span><b>₪13,000</b></div>
-        <div class="prog"><span>שיעורי מוגנות · כיתות ה'-ו'</span><b>₪5,000</b></div>
+        <div class="prog"><span class="gb gb3">3</span><span class="pn">סדנאות אקלים חברתי</span><b>₪25,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">קלאס-אי טק</span><b>₪22,000</b></div>
+        <div class="prog"><span class="gb gb3">3</span><span class="pn">טיפול במוזיקה</span><b>₪13,000</b></div>
+        <div class="prog"><span class="gb gb3">3</span><span class="pn">שיעורי מוגנות · כיתות ה'-ו'</span><b>₪5,000</b></div>
       </div>
     </div>
 
@@ -265,13 +289,13 @@ body { font-family: 'Heebo', sans-serif; direction: rtl; background: #EBEDF2; co
       <div class="basket-head"><span class="bn">סל מענים פדגוגיים ורגשיים</span><span class="bsum">₪64,298</span></div>
       <div class="basket-split"><span>קבוע <b>₪44,457</b></span><span>גמיש <b>₪19,841</b></span></div>
       <div class="basket-progs">
-        <div class="prog"><span>השאלת ספרים</span><b>₪20,000</b></div>
-        <div class="prog"><span>ימי שיא (חשבון, אנגלית, שפה)</span><b>₪12,000</b></div>
-        <div class="prog"><span>סביבות תוכן דיגיטלי · סנונית</span><b>₪8,000</b></div>
-        <div class="prog"><span>העשרת ספריות</span><b>₪7,298</b></div>
-        <div class="prog"><span>סביבות תוכן דיגיטלי · מטיפיק</span><b>₪7,000</b></div>
-        <div class="prog"><span>ספרים דיגיטליים · העשרה ופעילויות מגבשות</span><b>₪5,000</b></div>
-        <div class="prog"><span>מרחב אינטראקטיבי ללמידה בתנועה</span><b>₪5,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">השאלת ספרים</span><b>₪20,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">ימי שיא (חשבון, אנגלית, שפה)</span><b>₪12,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">סביבות תוכן דיגיטלי · סנונית</span><b>₪8,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">העשרת ספריות</span><b>₪7,298</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">סביבות תוכן דיגיטלי · מטיפיק</span><b>₪7,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">ספרים דיגיטליים · העשרה ופעילויות מגבשות</span><b>₪5,000</b></div>
+        <div class="prog"><span class="gb gb2">2</span><span class="pn">מרחב אינטראקטיבי ללמידה בתנועה</span><b>₪5,000</b></div>
       </div>
     </div>
 
